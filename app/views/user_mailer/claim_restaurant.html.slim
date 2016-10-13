@@ -1,0 +1,6 @@
+h3 Restaurant Name
+div= @restaurant.name
+h3 Address
+div= "#{@restaurant.address} #{@restaurant.locality} #{@restaurant.region}, #{@restaurant.country.upcase}"
+h3 Claim By 
+div= "#{@claim.first_name} #{@claim.last_name}"

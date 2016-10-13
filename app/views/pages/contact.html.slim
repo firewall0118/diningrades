@@ -1,0 +1,28 @@
+.container.non-map ng-controller="ContactUsCtrl"
+  #contact-us
+    h1 Contact Us
+    h5 Do you have a question or comment for us? Do you have suggestions for improvement? Use the form below to contact us and we will get back to you as soon as we can.
+    br
+    form name="contactForm" ng-submit="submitContact($event)"
+      div.form-group
+        label FIRST NAME*
+        input type="text" class="form-control input-lg" required="required" placeholder="First Name" ng-model="contact.firstname"
+      div.form-group
+        label LAST NAME*
+        input type="text" class="form-control input-lg" required="required" placeholder="Last Name" ng-model="contact.lastname"
+      div.form-group
+        label EMAIL ADDRESS*
+        input type="email" class="form-control input-lg" required="required" placeholder="Email Address" ng-model="contact.email"
+      div.form-group
+        label PHONE NUMBER
+        input type="text" class="form-control input-lg" placeholder="Phone Number" ng-model="contact.phone"
+      div.form-group
+        label MESSAGE*
+        textarea class="form-control" placeholder="Message" required="required" rows="5" ng-model="contact.message"
+      .alert.alert-success ng-show="submitted"
+        | Thank you for submitting!
+      button.btn-lg-green.btn-block
+        | SUBMIT
+    h5
+      | By clicking "Submit" I agree to Dining Grades 
+      =link_to 'Terms of Service.', term_path

@@ -1,0 +1,73 @@
+// Map Search Box
+#search-box {
+  width: 100%;
+  background-color: $green;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  dl {
+    margin: 10px 0 0;
+    dt {
+      width: 260px;
+      h2 {
+        margin-top: 30px;
+        color: white;
+        font-weight: bold;
+        .fa {
+          margin-left: 10px;
+          display: none;
+        }
+      }
+    }
+    dd {
+      .col-md-12 {
+        padding: 0;
+        .col-md-3:first-child {
+          padding-left: 0;
+        }
+      }
+      margin-left: 280px;
+      .form-group {
+        label {
+          font-size: 11px;
+        }
+      }
+      .form-group.dropdown {
+        button {
+          text-align: left;
+          position: relative;
+          color: $inputcolor;
+          span {
+            position: absolute;
+            right: 10px;
+            top: calc(50% - 6px);
+            font-size: 12px;
+          }
+        }
+        ul.dropdown-menu {
+          min-width: 100%;
+          margin-top: -1px;
+          max-height: 200px;
+          overflow-y: auto;
+        }
+      }
+      #btn-search {
+        margin-top: 25px;
+        font-weight: bold;
+        padding: 5px 40px 5px 16px;
+        font-size: 18px;
+        text-align: center;
+        line-height: 35px;
+        svg {
+          position: absolute;
+          right: 10px;
+        }
+      }
+      .col-md-3 {
+        padding-right: 0;
+      }
+    }
+  }
+}

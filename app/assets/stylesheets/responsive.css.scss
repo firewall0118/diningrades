@@ -1,0 +1,21 @@
+@media (max-width: $screen-lg) {
+  @import 'responsive/lg';
+}
+@media (max-width: $screen-md) {
+  @import 'responsive/md'
+}
+@media (max-width: $screen-sm) {
+  @import 'responsive/sm';
+}
+@media (max-width: $screen-xs) {
+  @import 'responsive/xs';
+}
+@media (max-width: $screen-xxs) {
+  @import 'responsive/xxs';
+}
+@media (max-width: $screen-lg) and (min-width: $screen-sm) {
+  .container, main {
+    width: 100%;
+  }
+}
+

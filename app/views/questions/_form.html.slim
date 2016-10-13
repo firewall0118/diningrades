@@ -1,0 +1,11 @@
+= semantic_form_for @question do |f|
+  = f.semantic_errors *f.object.errors.keys
+  .row
+    .col-md-12
+      = f.input :question, input_html: {rows: 3}
+      = f.input :extended, label: false
+      = f.input :category
+      = f.input :position
+     
+  = f.submit 'Save', class: 'btn btn-primary'
+  = link_to 'Back', questions_path, class: 'btn btn-default'

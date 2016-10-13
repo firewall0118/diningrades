@@ -1,0 +1,285 @@
+.container.non-map#home ng-controller="AccountCtrl"
+  .col-md-12.col-sm-12.col-xs-12
+    .col-md-6.col-sm-6.col-xs-12
+      h1.welcome= 'Welcome back ' + current_user.name + '!'
+      .account-action
+        .col-md-6.col-sm-6
+          h4
+            strong Account Information
+        .col-md-6.col-sm-6.hidden-xxs.text-right
+          span.cursor ng-click="updateUser()" Edit Info
+          span &nbsp;|&nbsp;
+          span.cursor ng-click="updatePassword()" Change Password
+      div.account-info
+        strong Name: 
+        | {{current_user.name}}
+        br
+        strong Email Address: 
+        | {{current_user.email}}
+        br
+        strong Zip: 
+        | {{current_user.zipcode}}
+    .col-xs-12.visible-xxs
+      span.cursor ng-click="updateUser()" Edit Info
+      span &nbsp;|&nbsp;
+      span.cursor ng-click="updatePassword()" Change Password
+      hr
+    .col-md-6.col-sm-6.col-xs-12.rate-score
+      | You've Rated:
+      span.score= current_user.rated_count
+      | Average Cleanliness Rating: {{"#{current_user.average_cleanliness_rating}" | gradeslabel}}
+
+  .col-md-12.col-sm-12.col-xs-12#my-restaurants ng-show="myrestaurants.length > 0"
+    h3 My Restaurants
+    .row.header.hidden-xxs
+      .col-md-4.col-sm-4
+        strong RESTAURANT NAME
+      .col-md-2.col-sm-2
+        strong STATE
+      .col-md-2.col-sm-2
+        strong CLEANLINESS
+      .col-md-2.col-sm-2
+        strong SATISFACTION
+      .col-md-2.col-sm-2
+        strong RECOMMENDATION
+    .row.my-restaurant ng-repeat="r in myrestaurants"
+      .hidden-xxs
+        .col-md-4.col-sm-4
+          a.open-window href="javascript:void(0)" data-link="{{r.restaurant.website}}"
+            | {{r.restaurant.name}}
+        .col-md-2.col-sm-2
+          | {{r.restaurant.region}}
+        .col-md-2.col-sm-2
+          | {{r.restaurant.grades | gradeslabel}}
+        .col-md-2.col-sm-2
+          .rating data-rating="{{r.restaurant.satisfaction}}"
+        .col-md-2.col-sm-2
+          .rating data-rating="{{r.restaurant.recommendation}}"
+        .col-md-10.col-sm-10
+          div
+            | {{r.restaurant.address + ' ' + r.restaurant.locality + ' ' + r.restaurant.region + ', ' + r.restaurant.country.toUpperCase()}}
+          div Phone: {{r.restaurant.tel}}
+          div
+            | Website: 
+            a.open-window href="javascript:void(0)" data-link="{{r.restaurant.website}}"
+              | {{r.restaurant.website}}
+        .col-md-2.col-sm-2
+
+      .col-xxs-12.visible-xxs
+        div
+          strong Restaurant Name: 
+          | {{r.restaurant.name}}
+        div
+          strong State: 
+          | {{r.restaurant.region}}
+        div
+          strong Cleanliness: 
+          | {{r.restaurant.grades | gradeslabel}}
+        div
+          strong Satisfaction: 
+          .rating data-rating="{{r.restaurant.satisfaction}}"
+        div
+          strong Recommendation: 
+          .rating data-rating="{{r.restaurant.recommendation}}"
+
+      .actions
+        .col-md-3.col-sm-3.col-xs-12
+          a.btn-lg-black.btn-block ng-click="showRestaurantInfo(r.restaurant, $index)"
+            = inline_svg 'icons/pencil.svg', class: 'svg-btn-icon'
+            | EDIT INFORMATION
+        .col-md-2.col-sm-2.col-xs-12
+          a.btn-lg-yellow.btn-block ng-click="showRestaurantRatings(r.restaurant)"
+            = inline_svg 'icons/circle-star.svg', class: 'svg-btn-icon'
+            | VIEW RATINGS
+        .col-md-4.col-sm-4.col-xs-12
+          a.btn-lg-red.btn-block#btn-food-poisoning
+            = inline_svg 'icons/skulls.svg', class: 'svg-btn-icon'
+            | SUSPECTED FOOD POISONING REPORTS
+        .col-md-3.col-sm-3.col-xs-12
+          a.btn-lg-green.btn-block#btn-food-safety
+            = inline_svg 'icons/graduate-cap.svg', class: 'svg-btn-icon'
+            | FOOD SAFETY EDUCATION
+      hr
+
+  .col-md-12.col-sm-12.col-xs-12#past-ratings
+    h3 My Past Ratings
+    table.table.table-hover.table-responsive.no-table-border.hidden-xxs
+      thead
+        tr
+          th ng-click="order('created_at')"
+            | DATE
+            span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='created_at' && reverse, 'glyphicon-menu-down': predicate=='created_at' && !reverse}"
+          th ng-click="order('restaurant.name')" width="30%"
+            | RESTAURANT NAME
+            span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='restaurant.name' && reverse, 'glyphicon-menu-down': predicate=='restaurant.name' && !reverse}"
+          th.hidden-sm.hidden-xs ng-click="order('restaurant.locality')"
+            | CITY
+            span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='restaurant.locality' && reverse, 'glyphicon-menu-down': predicate=='restaurant.locality' && !reverse}"
+          th.hidden-sm.hidden-xs ng-click="order('restaurant.region')"
+            | STATE
+            span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='restaurant.region' && reverse, 'glyphicon-menu-down': predicate=='restaurant.region' && !reverse}"
+          th ng-click="order('restaurant.grades')"
+            | RATING
+            span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='restaurant.grades' && reverse, 'glyphicon-menu-down': predicate=='restaurant.grades' && !reverse}"
+          th ng-click="order('satisfaction')"
+            | SATISFACTION
+            span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='satisfaction' && reverse, 'glyphicon-menu-down': predicate=='satisfaction' && !reverse}"
+          th ng-click="order('recommendation')"
+            | RECOMMENDATION
+            span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='recommendation' && reverse, 'glyphicon-menu-down': predicate=='recommendation' && !reverse}"
+      tbody
+        tr ng-repeat="r in ratings | orderBy:predicate:reverse"
+          td data-id="{{r.restaurant.id}}"
+            | {{r.created_at | date:'M/d/yy'}}
+          td
+            a.open-window href="javascript:void(0)" data-link="{{r.restaurant.website}}"
+              | {{r.restaurant.name}}
+            h5 ng-if="r.comment"
+              | "{{r.comment}}"
+          td.hidden-sm.hidden-xs
+            | {{r.restaurant.locality}}
+          td.hidden-sm.hidden-xs
+            | {{r.restaurant.region}}
+          td 
+            | {{r.restaurant.grades | gradeslabel}}
+          td
+            .rating data-rating="{{r.satisfaction}}"
+          td
+            .rating data-rating="{{r.recommendation}}"
+    .visible-xxs
+      .col-xxs-12.wrap-restaurant ng-repeat="r in ratings | orderBy:predicate:reverse"
+        div
+          strong Rating: 
+          | {{r.restaurant.grades | gradeslabel}}
+        div
+          strong Satisfaction
+          .rating data-rating="{{r.satisfaction}}"
+        div
+          strong Recommendation
+          .rating data-rating="{{r.recommendation}}"
+        br
+        div
+          strong Restaurant Name: 
+          | {{r.restaurant.name}}
+        div
+          strong City: 
+          | {{r.restaurant.locality}}
+        div
+          strong State: 
+          | {{r.restaurant.region}}
+        div
+          strong Date: 
+          | {{r.created_at | date:'M/d/yy'}}
+
+  #restaurantRatingsModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          table.table.table-hover.table-responsive.hidden-xxs
+            thead
+              tr
+                th Date
+                th Vote By
+                th Comment
+                th Satisfaction
+                th Recommendation
+            tbody
+              tr ng-repeat="rr in restaurantRatings"
+                td
+                  | {{rr.created_at | date:'M/d/yy'}}
+                td
+                  | {{rr.user.name}}
+                td
+                  | {{rr.comment}}
+                td
+                  .rating data-rating="{{rr.satisfaction}}"
+                td
+                  .rating data-rating="{{rr.recommendation}}"
+          .row.visible-xxs
+            .col-xxs-12 ng-repeat="rr in restaurantRatings"
+              div
+                strong Date: 
+                | {{rr.created_at | date:'M/d/yy'}}
+              div
+                strong Vote By: 
+                | {{rr.user.name}}
+              div
+                strong Comment: 
+                | {{rr.comment}}
+              div
+                strong Satisfaction: 
+                .rating data-rating="{{rr.satisfaction}}"
+              div
+                strong Recommendation: 
+                .rating data-rating="{{rr.recommendation}}"
+              hr
+
+  #restaurantInfoModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          form name="restaurantInfoForm" ng-submit="editRestaurant($event)"
+            div.form-group
+              label TYPE OF CUISINE
+              multiselect ng-model="restaurantInfo.cuisine" options="c.label for c in cuisines" data-multiple="true" data-compare-by="value" scroll-after-rows="5" enableSearch="true"
+            div.form-group
+              label RESTAURANT NAME*
+              input type="text" class="form-control input-lg" placeholder="Restaurant Name" required="required" ng-model="restaurantInfo.name"
+            div.form-group
+              label ADDRESS*
+              input type="text" class="form-control input-lg" placeholder="Address" required="required" ng-model="restaurantInfo.address"
+            div.row
+              .col-md-4
+                  div.form-group
+                    label CITY*
+                    input type="text" class="form-control input-lg" placeholder="City" required="required" ng-model="restaurantInfo.locality"
+              .col-md-4
+                div.form-group
+                  label STATE*
+                  input type="text" class="form-control input-lg" placeholder="State" required="required" ng-model="restaurantInfo.region"
+              .col-md-4
+                div.form-group
+                  label COUNTRY*
+                  input type="text" class="form-control input-lg" placeholder="Country" required="required" ng-model="restaurantInfo.country"
+            div.form-group
+              label EMAIL ADDRESS*
+              input type="email" class="form-control input-lg" placeholder="Email Address" required="required" ng-model="restaurantInfo.email"
+            div.form-group
+              label WEBSITE
+              input type="text" class="form-control input-lg" placeholder="Website" ng-model="restaurantInfo.website"
+            div.row
+              .col-md-6
+                div.form-group
+                  label ZIP CODE
+                  input type="text" class="form-control input-lg" placeholder="ZIP Code" ng-model="restaurantInfo.postcode"
+              .col-md-6
+                div.form-group
+                  label PHONE NUMBER
+                  input type="text" class="form-control input-lg" placeholder="Phone Number" ng-model="restaurantInfo.tel"
+            div.row
+              .col-md-6
+                div.form-group
+                  label LATITUDE
+                  input type="number" step="any" class="form-control input-lg" placeholder="latitude" ng-model="restaurantInfo.latitude"
+              .col-md-6
+                div.form-group
+                  label LONGITUDE
+                  input type="number" step="any" class="form-control input-lg" placeholder="longitude" ng-model="restaurantInfo.longitude"
+            button.btn-lg-green.btn-block
+              | EDIT INFORMATION

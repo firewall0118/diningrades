@@ -1,0 +1,28 @@
+= semantic_form_for @claim do |f|
+  = f.semantic_errors *f.object.errors.keys
+  .row
+    .col-md-12
+      = f.hidden_field :restaurant_id
+      = f.hidden_field :user_id
+      = f.hidden_field :first_name
+      = f.hidden_field :last_name
+      = f.hidden_field :email
+      = f.hidden_field :tel
+      = f.hidden_field :address
+      = f.hidden_field :locality
+      = f.hidden_field :region
+      = f.hidden_field :zipcode
+      = f.hidden_field :active, :value => false
+
+      div.form-group
+        label Restaurant Name
+        div= "#{@claim.restaurant.name}"
+      div.form-group
+        label Restaurant Address
+        div= "#{@claim.restaurant.address} #{@claim.restaurant.locality} #{@claim.restaurant.region}, #{@claim.restaurant.country.upcase}"
+      div.form-group
+        label Claim By
+        div= "#{@claim.first_name} #{@claim.last_name}"
+
+  = f.submit 'Approve', class: 'btn btn-primary'
+  = link_to 'Back', claims_path, class: 'btn btn-default'

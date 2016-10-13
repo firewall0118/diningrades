@@ -1,0 +1,548 @@
+main {
+  .map-container {
+    height: 100%;
+    padding-bottom: 47px;
+    map {
+      height: 100%;
+    }
+  }
+}
+
+info-window {
+  div {
+    min-width: 200px;
+  }
+}
+
+// first time modal
+#firsttimeModal {
+  .modal-dialog {
+    .modal-content .modal-body {
+      padding: 10px 15px 30px;
+      h1 {
+        margin-top: 10px;
+        margin-bottom: 30px;
+        font-size: 45px;
+      }
+      .col-md-6 {
+        font-weight: bold;
+        text-align: left;
+        padding: 5px 0;
+        padding-left: 40px;
+        .svg-check {
+          margin-right: 5px;
+        }
+      }
+      .row {
+        .col-md-6:last-child {
+          padding-left: 0;
+        }
+      }
+      .btn-default {
+        background-color: #FE9500;
+        border-color: #FE9500;
+        color: white;
+        padding: 10px 25px;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.left-sidebar {
+  width: 380px;
+  padding: 20px 10px 20px 30px;
+  height: calc(100% - 100px - 40px);
+  box-shadow: 8px 0 10px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  left: 0;
+  top: 100px;
+  background-color: white;
+  display: none;
+  .glyphicon-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #B8BDC0;
+    cursor: pointer;
+  }
+  h2 {
+    margin-bottom: 20px;
+  }
+  #sort-by {
+    margin-bottom: 5px;
+    position: relative;
+    div {
+      cursor: pointer;
+      display: inline-block;
+      .glyphicon {
+        font-size: 12px;
+        margin-left: 5px;
+        margin-right: 10px;
+      }
+    }
+    div.active {
+      color: $green;
+      font-weight: bold;
+    }
+    div:first-child {
+      width: 60px;
+    }
+    div.result-total {
+      position: absolute;
+      right: 20px;
+      top: 2px;
+      color: $green;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+  #restaurants {
+    width: 100%;
+    overflow-y: auto;
+    height: calc(100% - 145px);
+    .restaurant {
+      width: calc(100% - 10px);
+      padding: 0;
+      font-size: 16px;
+      position: relative;
+      .level-box {
+        position: absolute;
+        left: 250px;
+        top: 30px;
+        width: 65px;
+        height: 65px;
+        background-color: $grey;
+        font-weight: bold;
+        text-align: center;
+        .color {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 0;
+          height: 0;
+          border-top: 0 solid transparent;
+          border-right: 1.6em solid transparent;
+          border-bottom: 1.6em solid transparent;
+          border-left: 0 solid transparent;
+          border-right-color: #aaaaaa;
+        }
+        .abc {
+          height: 38px;
+          font-size: 34px;
+          line-height: 40px;
+          margin-top: 6px;
+        }
+        .desc {
+          font-size: 9px;
+          line-height: 14px;
+        }
+      }
+      .name {
+        width: 100%;
+        a {
+          color: $blackgreen;
+          text-decoration: underline;
+          font-weight: bold;
+          font-size: 18px;
+        }
+      }
+      .street {
+        width: 75%;
+      }
+      .rating {
+        font-weight: bold;
+        padding: 0;
+        .rlabel {
+          display: inline-block;
+        }
+        .star-rating {
+          margin-left: 10px;
+        }
+      }
+      .recommendation-rating {
+        padding-top: 0;
+      }
+      .actions {
+        margin-top: 5px;
+        a {
+          padding: 10px 20px 8px;
+        }
+        .btn-lg-yellow {
+          margin-left: 5px;
+        }
+      }
+      .dt-dd {
+        .dt {
+          float: left;
+          width: 55px;
+          overflow: hidden;
+          clear: left;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .dd {
+          margin-left: 55px;
+        }
+      }
+    }
+    .show-more {
+      margin: 5px 0;
+      color: $green;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      width: 100%;
+      cursor: pointer;
+    }
+  }
+  h3 {
+    margin-top: 0;
+  }
+  h4 {
+    font-weight: bold;
+    margin: 20px 0 10px;
+  }
+  .btn-lg-red {
+    width: calc(100% - 30px);
+  }
+  hr {
+    border-top: 2px solid #eeeeee;
+  }
+  .suggest-restaurant {
+    h4 {
+      margin: 10px 0;
+    }
+  }
+}
+
+.left-sidebar-details {
+  @extend .left-sidebar;
+  width: 450px;
+  .scroll-container {
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 10px;
+  }
+  #notice {
+    padding: 10px 10px 10px 40px;
+    font-style: italic;
+    font-size: 13px;
+    background-color: #EDEDED;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    position: relative;
+    .svg-medal {
+      position: absolute;
+      left: -10px;
+      top: -6px;
+    }
+  }
+  #restaurants {
+    overflow-y: initial;
+    height: auto;
+    .restaurant {
+      margin-top: 0;
+      line-height: 24px;
+      width: 100%;
+      .level-box {
+        left: auto;
+        right: 5px;
+        top: 10px;
+        width: 75px;
+        height: 75px;
+        .color {
+          border-right: 1.8em solid transparent;
+          border-bottom: 1.8em solid transparent;
+          border-right-color: #00AEFF;
+        }
+        .abc {
+          font-size: 40px;
+          line-height: 50px;
+          margin-top: 8px;
+        }
+        .desc {
+          font-size: 11px;
+          line-height: 22px;
+        }
+      }
+      .rating {
+        font-size: 16px;
+        .rating-a {
+          position: absolute;
+        }
+      }
+      #addrating {
+        margin-top: 20px;
+      }
+      .sub-actions {
+        font-size: 13px;
+        padding-top: 3px;
+        a {
+          margin-left: 10px;
+        }
+        a:first-child {
+          margin-left: 0;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  .comment {
+    margin-bottom: 15px;
+    .ratings {
+      font-size: 14px;
+      font-weight: bold;
+      width: 100%;
+      .recommendation{
+        display: inline-block;
+      }
+      .satisfaction {
+        display: inline-block;
+        margin-right: 15px;
+      }
+      .star-rating {
+        margin-left: 10px;
+        font-size: 14px;
+      }
+    }
+    p {
+      margin-bottom: 0;
+    }
+    .by {
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+  #restaurants-back {
+    position: absolute;
+    height: 100%;
+    width: 30px;
+    left: 0;
+    top: 0;
+    box-shadow: 17px 0 35px #DFDFDF;
+    border-right: 2px solid #DFDFDF;
+    .svg-double-right-arrow {
+      margin: 5px 0 0 7px;
+    }
+    .rotate-text {
+      -webkit-transform: rotate(270deg);
+      -moz-transform: rotate(270deg);
+      -o-transform: rotate(270deg);
+      writing-mode: lr-tb;
+
+      width: 125px;
+      position: absolute;
+      left: -48px;
+      top: 65px;
+      font-size: 13px;
+    }
+  }
+}
+
+.left-sidebar-rating {
+  @extend .left-sidebar;
+  width: 500px;
+  padding-left: 60px;
+  padding-right: 30px;
+  padding: 10px 10px 20px 30px;
+  font-size: 16px;
+  .scroll-container {
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 10px;
+  }
+  .row {
+    margin: 0;
+    .col-md-12 {
+      padding: 0;
+      .col-md-8, .col-md-4 {
+        padding: 0;
+        margin: 5px 0;
+      }
+      .col-md-4 {
+        text-align: right;
+        div.radio {
+          display: inline-block;
+          margin: 0;
+          label {
+            font-weight: bold;
+            color: #9EA19A;
+          }
+        }
+        div.radio:last-child {
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+  .btn-lg-grey {
+    text-align: left;
+    svg {
+      float: right;
+      margin-top: 0;
+      path {
+        fill: #14571F;
+      }
+    }
+  }
+  .btn-lg-yellow {
+    margin-top: 10px;
+  }
+  #provide-detail {
+    padding: 10px 20px 8px;
+  }
+  .alert-danger {
+    margin: 10px;
+  }
+}
+
+.left-sidebar-thankyou {
+  @extend .left-sidebar-details;
+  padding: 20px 10px 20px 30px;
+  width: 480px;
+  #restaurants {
+    .restaurant {
+      border-bottom: 0;
+      .level-box {
+        top: 0;
+      }
+      .rating-comment {
+        font-weight: bold;
+        width: calc(100% - 130px);
+      }
+    }
+  }
+  .thankyou-desc {
+    line-height: 24px;
+    margin-top: 50px;
+  }
+  ul {
+    padding-left: 20px;
+    line-height: 24px;
+  }
+}
+
+.signinup-modal {
+  .forgot-password {
+    font-size: 13px;
+    position: absolute;
+    color: white;
+    top: calc(100% + 3px);
+    cursor: pointer;
+  }
+  .get-started {
+    font-size: 13px;
+    position: absolute;
+    color: white;
+    top: calc(100% + 3px);
+    right: 0;
+    span {
+      @extend .plink;
+    }
+  }
+  .login {
+    font-size: 13px;
+    position: absolute;
+    color: white;
+    left: calc(50% - 100px);
+    top: calc(100% + 3px);
+    cursor: pointer;
+    span {
+      @extend .plink;
+    }
+  }
+  .modal-dialog {
+    width: 505px;
+  }
+}
+#loginModal{
+
+}
+#signupModal {
+  .modal-dialog {
+    margin-top: 40px;
+    .terms {
+      margin-top: 15px;
+      font-size: 13px;
+      a {
+        @extend .plink;
+      }
+    }
+    .row {
+      text-align: left;
+      margin-top: 20px;
+      .col-md-4 {
+
+      }
+      .col-md-8 {
+        padding-right: 0;
+      }
+    }
+    .fomr-group {
+      label {
+        font-size: 13px;
+      }
+    }
+  }
+}
+#claimRestaurantModal {
+  .modal-dialog {
+    width: 680px;
+    h5 {
+      line-height: 25px;
+      display: inline-block;
+    }
+    .col-md-10 {
+      font-weight: bold;
+      text-align: left;
+      line-height: 40px;
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    a.btn-lg-green {
+      padding: 10px 50px;
+    }
+  }
+}
+#claimMyModal {
+  .modal-dialog {
+    margin-top: 40px;
+  }
+}
+#suggestRestaurantModal {
+  .modal-dialog {
+    margin-top: 20px;
+  }
+}
+
+#reportRestaurant {
+  input[type="radio"], input[type="checkbox"] {
+    margin: 8px 0 0 -20px;
+  }
+  form {
+    .row {
+      margin: 5px 0;
+    }
+  }
+}
+
+multiselect {
+  > .btn-group {
+    width: 100%;
+    > button {
+      text-align: left;
+      width: 100%;
+      height: 46px;
+      font-size: 16px;
+      color: #A5A5A5;
+    }
+  }
+  ul.dropdown-menu {
+    width: 100%;
+  }
+}

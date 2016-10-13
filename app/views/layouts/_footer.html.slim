@@ -1,0 +1,27 @@
+.container
+  = inline_svg 'icons/down-long-arrow.svg', class: 'svg-down-long-arrow'
+  h2 Dine with Confidence. Dine with Us.
+  a.btn.btn-default.btn-lg href="/" FIND A RESTAURANT
+  ul
+    li
+      =link_to 'About', about_path
+    li
+      =link_to 'Contact', contact_path
+    li
+      a href="" Blog
+    li
+      a href="" Food Courses
+    li
+      =link_to 'Privacy', term_path
+  div.company-brand
+    .logo
+    .brand
+  p.copyright
+    | &copy; Copyright Dining Grades. All Rights Reserved.
+    br
+    | Website developed by 
+    a href="http://www.bkmediagroup.com/" target="bkmediagroup" rel="nofollow" BKMedia Group
+.footer-menu
+  span.cursor.show-footer-arrow
+    | Footer Menu
+    = inline_svg 'icons/up-long-arrow.svg', class: 'svg-up-long-arrow'

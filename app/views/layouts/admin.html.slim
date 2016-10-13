@@ -1,0 +1,7 @@
+- provide :content do
+  == render 'layouts/sign_in_up'
+  .container.admin
+    == render 'layouts/messages'
+    = yield
+  
+== render template: 'layouts/base'

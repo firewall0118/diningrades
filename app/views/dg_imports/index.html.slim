@@ -1,0 +1,23 @@
+h1 Import Health Department Ratings
+p= link_to 'Import', new_dg_import_path(), class: 'btn btn-primary'
+table.table
+  tr
+    th File Name
+    th Total
+    th Inserted
+    th Error
+    th Imported Date
+    th Import Type
+    th
+  - @csv_files.each do |csv|
+    tr
+      td= csv.file_name
+      td= csv.total
+      td= csv.insert_cnt
+      td= csv.error_cnt
+      td= csv.created_at
+      td= csv.type_label
+      td
+        = link_to 'Destroy', dg_import_path(csv), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
+br
+p= link_to 'Import', new_dg_import_path(), class: 'btn btn-primary'

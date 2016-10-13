@@ -1,0 +1,10 @@
+= semantic_form_for [@question, @option] do |f|
+  = f.semantic_errors *f.object.errors.keys
+  .row
+    .col-md-12
+      = f.input :title, input_html: {rows: 3}
+      = f.input :deduction
+      = f.input :position
+     
+  = f.submit 'Save', class: 'btn btn-primary'
+  = link_to 'Back', question_options_path(@question), class: 'btn btn-default'

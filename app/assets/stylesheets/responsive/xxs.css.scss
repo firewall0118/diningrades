@@ -1,0 +1,137 @@
+// override brand position
+.navbar-header {
+  button {
+    margin-right: 5px;
+  }
+  .navbar-brand {
+    float: none;
+    padding-left: 5px;
+    .logo {
+      margin-top: 10px;
+    }
+    .brand {
+      margin-top: 5px;
+    }
+  }  
+}
+
+.modal-dialog .modal-content .modal-body {
+  padding: 10px;
+}
+
+#firsttimeModal {
+  .modal-dialog {
+    .modal-content .modal-body {
+      .row {
+        .col-xs-12 {
+          padding: 0 0 0 20px !important;
+        }
+      }
+    }
+  }
+}
+#search-box {
+  height: auto;
+  min-height: 30px;
+  dl {
+    dd {
+      display: none;
+      .col-xxs-12 {
+        padding: 0;
+        .form-group {
+          margin-bottom: 0;
+        }
+      }
+      button#btn-search {
+        margin-top: 15px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+#home {
+  .col-xs-12 {
+    padding: 0;
+  }
+  .wrap-restaurant {
+    padding: 10px;
+    border-top: 1px solid black;
+  }
+}
+#restaurantRatingsModal {
+  .modal-dialog {
+    text-align: left;
+  }
+}
+#updateModal, #passwordModal {
+  .modal-body {
+    padding: 15px;
+  }
+}
+
+// override sidebar
+.lsidebar {
+  height: calc(100% - 20px - 40px);
+  top: 30px;
+  width: 100%;
+}
+.left-sidebar {
+  #restaurants {
+    height: calc(100% - 115px);
+    .restaurant {
+      .level-box {
+        left: auto;
+        right: 5px;
+      }
+    }
+  }
+}
+.left-sidebar-details {
+  padding: 10px 0 10px 45px;
+  #restaurants {
+    height: auto;
+  }
+}
+.left-sidebar-thankyou {
+  padding: 10px 10px 50px 20px;
+  #restaurants {
+    height: auto;
+  }
+  .scroll-container {
+    .thankyou-desc {
+      margin-top: 20px;
+    }
+  }
+}
+
+#claimRestaurantModal {
+  h2 {
+    font-size: 20px;
+  }
+  .col-md-12 {
+    padding: 0;
+    .col-md-10 {
+      line-height: 26px;
+    }
+  }
+  .modal-dialog {
+    a.btn-lg-green {
+      padding: 10px;
+      font-size: 16px;
+    }
+  }
+}
+#claimMyModal {
+  .modal-body {
+    padding: 5px 15px;
+  }
+}
+// footer
+footer {
+  .container {
+    h2 {
+      font-size: 20px;
+      padding-right: 20px;
+    }
+  }
+}

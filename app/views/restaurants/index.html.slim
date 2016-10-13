@@ -1,0 +1,28 @@
+.row
+  .col-md-8
+    h1 Restaurants
+  .col-md-2
+    br
+    = link_to 'Import Ratings', dg_imports_path(), class: 'btn btn-primary'
+  .col-md-2
+    br
+    = form_tag restaurants_path, method: 'get' do
+      = select_tag :filter_active, options_for_select([['All', ''],['Active', '1'],['Inactive', '0']], @filter_active), :onchange => "this.form.submit();", class: 'form-control'
+
+.row
+= will_paginate
+table.table
+  tr
+    th Name
+    th Address
+    th Cuisine
+    th
+  - @restaurants.each do |restaurant|
+    tr
+      td= restaurant.name
+      td= "#{restaurant.address} #{restaurant.locality} #{restaurant.region}, #{restaurant.country.upcase}"
+      td= restaurant.cuisine
+      td
+        = link_to 'Edit', edit_restaurant_path(restaurant), class: 'btn btn-primary'
+        = link_to 'Destroy', restaurant, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
+= will_paginate

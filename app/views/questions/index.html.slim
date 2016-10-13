@@ -1,0 +1,22 @@
+h1 Questions
+
+p= link_to 'New question', new_question_path, class: 'btn btn-primary'
+table.table
+  tr
+    th Question
+    th Extended
+    th Category
+    th position
+    th
+  - @questions.each do |question|
+    tr
+      td= question.question
+      td= question.extended
+      td= question.category
+      td= question.position
+      td
+        = link_to 'Options', question_options_path(question), class: 'btn btn-default'
+        = link_to 'Edit', edit_question_path(question), class: 'btn btn-primary'
+        = link_to 'Destroy', question, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger'
+br
+p= link_to 'New question', new_question_path, class: 'btn btn-primary'

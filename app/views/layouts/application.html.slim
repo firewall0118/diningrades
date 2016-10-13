@@ -1,0 +1,6 @@
+- provide :content do
+  == render 'layouts/search_box'
+  == render 'layouts/sign_in_up'
+  = yield
+  
+== render template: 'layouts/base'

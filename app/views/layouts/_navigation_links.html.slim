@@ -1,0 +1,24 @@
+li.hide-item.login
+  a#login href="javascript:void(0)" ng-click="login()"
+    | Login
+li.divider.hidden-xs.hide-item.login |
+li.hide-item.login
+  a#signup href="javascript:void(0)" ng-click="signup()"
+    | Sign Up
+
+li.hide-item.logout-admin
+  =link_to 'Restaurants', restaurants_path
+li.divider.hidden-xs.hide-item.logout-admin |
+li.hide-item.logout-admin
+  =link_to 'Claims', claims_path
+li.divider.hidden-xs.hide-item.logout-admin |
+li.hide-item.logout-admin
+  =link_to 'Questions', questions_path
+li.divider.hidden-xs.hide-item.logout-admin |
+li.hide-item.logout
+  a href="accounts"
+    | My Account
+li.divider.hidden-xs.hide-item.logout |
+li.hide-item.logout
+  a#logout href="javascript:void(0)" ng-click="logout()"
+    | Log Out

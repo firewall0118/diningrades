@@ -1,0 +1,599 @@
+div ng-controller="GoogleMapCtrl" class="map-container"
+  map center="[37.09024, -95.712891]" map-type-id="TERRAIN" zoom="4" disable-default-u-i="false" on-dragend="mapDragend()" on-click="mapClicked()" on-zoom_changed="mapZoomChanged()"
+    marker ng-repeat="r in restaurants" id="{{'marker' + r.id}}" position="{{r.latitude}}, {{r.longitude}}" title="{{r.name}}" icon="{{mapIcon(r)}}" on-click="openInfoWindow(r)"
+
+  #firsttimeModal.modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-body
+          h3 The fastest, easiest way to
+          h1 Rate & Review Restaurants
+          .row
+            .col-md-6.col-xs-12
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Rate on Cleanliness
+            .col-md-6.col-xs-12
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Review Restaurant Cleanliness
+          .row
+            .col-md-6.col-xs-12
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Rate Food Service & Quality
+            .col-md-6.col-xs-12
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Review Diner Comments
+          .row
+            .col-md-6.col-xs-12
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Rate on Satisfaction
+            .col-md-6.col-xs-12
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Review Diner Satisfaction
+          h3 Eat with confidence!
+          a.btn.btn-default.btn-lg FIND A RESTAURANT
+
+  #gpsModal.modal.fade
+    .modal-dialog
+      .modal-content
+        .modal-body
+          h3 For better restaurant results please allow DiningGrades.com to access your location
+          .row
+            .col-md-1
+            .col-md-5
+              a.btn-lg-red.btn-block ng-click="allowGPSInfo(false)" DON’T ALLOW
+            .col-md-5
+              a.btn-lg-green.btn-block ng-click="allowGPSInfo(true)" ALLOW
+            .col-md-1
+
+  div.left-sidebar.lsidebar#searchResults
+    span.glyphicon.glyphicon-remove.close-left-sidebar
+    h3 Restaurant Results:
+    #sort-by
+      div
+        | Sort By:
+      div ng-show="client_info" ng-class="{active: predicate=='distance'}" ng-click="order('distance')"
+        | Distance
+        span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='distance' && reverse, 'glyphicon-menu-down': predicate=='distance' && !reverse}"
+      div ng-class="{active: predicate=='name'}" ng-click="order('name')"
+        | Name
+        span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='name' && reverse, 'glyphicon-menu-down': predicate=='name' && !reverse}"
+      div ng-class="{active: predicate=='grades'}" ng-click="order('grades')"
+        | Grade
+        span.glyphicon ng-class="{'glyphicon-menu-up': predicate=='grades' && reverse, 'glyphicon-menu-down': predicate=='grades' && !reverse}"
+    #restaurants ng-show="restaurants.length == 0"
+      br
+      | No Match Restaurants
+    #restaurants ng-hide="restaurants.length == 0"
+      .show-more ng-show="!spinneractive" ng-click="showMore()" SHOW MORE
+      .restaurant ng-repeat="res in restaurants | orderBy:predicate:reverse"
+        div.level-box
+          div.color ng-hide="res.grades==0" ng-style="{ 'border-right-color': (res.grades | gradescolor) }"
+          div.abc
+            | {{ res.grades | gradeslabel }}
+          div.desc Cleanliness
+        div.name
+          a href="javascript:void(0)" ng-click="viewProfile(res)" {{res.name}} 
+        div.street
+          | {{res.address + ' ' + res.locality}}
+        div.city
+          | {{res.region + ' ' + res.postcode}}
+        div.phone ng-show="res.tel"
+          | Phone: {{res.tel}}
+        div.rating
+          | Satisfaction:
+          .rating-a data-rating="{{res.satisfaction}}"
+        div.rating.recommendation-rating
+          | Recommendation:
+          .rating-a data-rating="{{res.recommendation}}"
+        div.actions
+          a.btn-lg-green ng-click="viewProfile(res)"
+            = inline_svg 'icons/logo.svg', class: 'svg-apple'
+            | VIEW PROFILE
+          a.btn-lg-yellow ng-click="viewRate(res)"
+            = inline_svg 'icons/circle-star.svg', class: 'svg-circle-star'
+            | RATE
+        hr
+
+      .show-more ng-show="!spinneractive" ng-click="showMore()" SHOW MORE
+      div us-spinner="{radius:8, width:2, length:6}" spinner-key="spinner-showmore"
+
+    .suggest-restaurant
+      h4
+        | Don't see what you're looking for?
+      a.btn-lg-red ng-click="openSuggestRestaurant()"
+        = inline_svg 'icons/circle-plus.svg', class: 'svg-circle-plus'
+        | SUGGEST A RESTAURANT
+
+  div.left-sidebar-details.lsidebar#restaurantDetails
+    span.glyphicon.glyphicon-remove.close-left-sidebar
+    div.scroll-container
+      a href="javascript:void(0)" ng-click="showResults()"
+        | Back&nbsp;
+        = inline_svg 'icons/double-right-arrow.svg', class: 'svg-double-right-arrow'
+      #notice ng-if="showFoodSatefyCourseBanner()"
+        = inline_svg 'icons/medal.svg', class: 'svg-medal'
+        | 30% of our employees have completed the 
+        strong Dining Grades Food Safety Course!
+      h2
+        | {{restaurant.name}}
+      #restaurants
+        .restaurant
+          div.level-box
+            div.color ng-hide="restaurant.grades==0" ng-style="{ 'border-right-color': (restaurant.grades | gradescolor) }"
+            div.abc
+              | {{ restaurant.grades | gradeslabel }}
+            div.desc Cleanliness
+          div.street
+            | {{restaurant.address + ' ' + restaurant.locality + ' ' + restaurant.region + ' ' + restaurant.postcode}}
+          div.phone
+            | Phone: {{restaurant.tel}}
+          div.website
+            | Website: 
+            a.underline.open-window href="javascript:void(0)" data-link="{{restaurant.website}}" {{restaurant.website}}
+          div
+            | Cuisine: {{restaurant.cuisine}}
+            br
+            | Price: $
+            br
+            a.underline href="javascript:void(0)" ng-hide="more_options" ng-click="more_options=true" More options &raquo;
+          div.dt-dd ng-show="more_options"
+            .dt
+              | Hours:
+            .dd
+              div ng-repeat="hour in restaurant.hours_display.split(';')"
+                | {{hour}}
+          div.rating
+            .rlabel
+              | Satisfaction Rating:
+            #rdSatisfaction.rating-a data-rating="0"
+          div.rating
+            .rlabel
+              | Recommendation Rating:
+            #rdRecommendation.rating-a data-rating="0"
+          a.btn-lg-yellow.btn-block#addrating ng-click="viewRate(null)"
+            = inline_svg 'icons/circle-star.svg', class: 'svg-circle-star'
+            | ADD A RESTAURANT RATING
+          div.sub-actions
+            a href="javascript:void(0)" ng-click="claimThisListing()" Claim This Listing
+            | |
+            a href="javascript:void(0)" ng-click="openFoodPoisoningReport()" Report a Suspected Food Poisoning
+      h4 Comments
+      .comment ng-repeat="rating in restaurant.ratings"
+        .ratings
+          .satisfaction
+            | Satisfaction:
+            .rating-a data-rating="{{rating.satisfaction}}"
+          .recommendation
+            | Recommendation:
+            .rating-a data-rating="{{rating.recommendation}}"
+        p ng-hide="rating.comment==''"
+          | "{{rating.comment}}"
+        .by
+          | {{rating.user.name}}
+
+  div.left-sidebar-rating.lsidebar#ratingRestaurant
+    span.glyphicon.glyphicon-remove ng-click="backRestaurant()"
+    div.scroll-container
+      h2 Rate {{restaurant.name}}
+      p 
+        | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        br
+        | Mauris faucibus eros sit amet fermentum hendrerit.
+      h4 Restaurant Cleanliness
+      .row
+        .col-md-12 ng-repeat="q in questions" ng-if="q.options.length > 0 && !q.extended"
+          .col-md-8.col-xs-12
+            | {{$index + 1}}. {{q.question}}
+          .col-md-4.col-xs-12
+            div ng-repeat="opt in q.options" class="radio"
+              label
+                input type="radio" name="rdo_questions{{q.id}}" class="rdo-questions" ng-value="opt.id"
+                | {{opt.title}}
+      
+      h4 Satisfaction
+      .row
+        .col-md-12
+          .col-md-8
+            | Were you greeted, seated and served to your satisfaction?
+          .col-md-4
+            .rating id="ratingSatisfaction" data-rating="0"
+
+      h4 Recommendation
+      .row
+        .col-md-12
+          .col-md-8
+            | Would you recommend this restaurant to friends/family?
+          .col-md-4
+            .rating id="ratingRecommendation" data-rating="0"
+
+      a.btn-lg-grey.btn-block#provide-detail ng-hide="rating_more_details" ng-click="rating_more_details=true"
+        | Want to provide more detail?
+        = inline_svg 'icons/circle-plus.svg', class: 'svg-circle-plus'
+      .row ng-show="rating_more_details"
+        .col-md-12 ng-repeat="q in questions" ng-if="q.options.length > 0 && q.extended"
+          .col-md-8.col-xs-12
+            | {{$index + 1}}. {{q.question}}
+          .col-md-4.col-xs-12
+            div ng-repeat="opt in q.options" class="radio"
+              label
+                input type="radio" name="rdo_questions{{q.id}}" class="rdo-questions" ng-value="opt.id"
+                | {{opt.title}}
+
+      hr
+      h4 Comments
+      textarea class="form-control" rows="5" ng-model="comment"
+      .alert.alert-danger ng-hide="rating_submit_validate"
+        | Please answer all questions
+      a.btn-lg-yellow.btn-block#submit-rating ng-click="submitRating()"
+        = inline_svg 'icons/circle-star.svg', class: 'svg-circle-star'
+        | SUBMIT YOUR RATING
+
+  div.left-sidebar-rating.lsidebar#reportRestaurant
+    span.glyphicon.glyphicon-remove ng-click="backRestaurant()"
+    div.scroll-container
+      h3 Report a Suspected Food Poisoning
+      form name="foodReportForm" ng-submit="submitFoodPoisoningReport($event)"
+        .row
+          .col-sm-5
+            | Suspected Food and # Persons:
+          .col-sm-7
+            textarea.form-control ng-model="food_report.comment" rows="3"
+        .row
+          .col-sm-5
+            | Fever/Chills:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoFever' ng-model='food_report.fever' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoFever' ng-model='food_report.fever' value='0' No
+        .row
+          .col-sm-5
+            | Nausea:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoNausea' ng-model='food_report.nausea' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoNausea' ng-model='food_report.nausea' value='0' No
+        .row
+          .col-sm-5
+            | Vomiting:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoVomiting' ng-model='food_report.vomiting' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoVomiting' ng-model='food_report.vomiting' value='0' No
+        .row
+          .col-sm-5
+            | Diarrhea:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoDiarrhea' ng-model='food_report.diarrhea' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoDiarrhea' ng-model='food_report.diarrhea' value='0' No
+        .row
+          .col-sm-5
+            | Abdominal Pain:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoAbdominal' ng-model='food_report.abdominal_pain' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoAbdominal' ng-model='food_report.abdominal_pain' value='0' No
+        .row
+          .col-sm-5
+            | Headache:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoHeadache' ng-model='food_report.headache' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoHeadache' ng-model='food_report.headache' value='0' No
+        .row
+          .col-sm-5
+            | Chest Pain:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoChest' ng-model='food_report.chest_pain' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoChest' ng-model='food_report.chest_pain' value='0' No
+        .row
+          .col-sm-5
+            | Numbness or Tingling:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoNumbness' ng-model='food_report.numbness_tingling' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoNumbness' ng-model='food_report.numbness_tingling' value='0' No
+        .row
+          .col-sm-5
+            | Dizziness:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoDizziness' ng-model='food_report.dizziness' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoDizziness' ng-model='food_report.dizziness' value='0' No
+        .row
+          .col-sm-5
+            | Rash:
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoRash' ng-model='food_report.rash' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoRash' ng-model='food_report.rash' value='0' No
+        .row
+          .col-sm-5
+            | Date of Exposure:
+          .col-sm-7
+            input.form-control.bt-date-picker ng-model='food_report.date_of_exposure'
+        .row
+          .col-sm-5
+            | Time you/they ate suspected food:
+          .col-sm-7
+            input.form-control.bt-time-picker ng-model='food_report.suspected_food_time'
+        .row
+          .col-sm-5
+            | Are YOU a Health Care Provider?
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoHealthCare' ng-model='food_report.healthcare_provider' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoHealthCare' ng-model='food_report.healthcare_provider' value='0' No
+        .row ng-show="food_report.healthcare_provider==1"
+          .col-sm-5
+            | Provider Email Address:
+          .col-sm-7
+            input.form-control ng-model='food_report.provider_email'
+        .row
+          .col-sm-5
+            | Patient Name:
+          .col-sm-7
+            input.form-control ng-model='food_report.patient_name'
+        .row
+          .col-sm-5
+            | Patient Telephone:
+          .col-sm-7
+            input.form-control ng-model='food_report.patient_telephone'
+        .row ng-show="food_report.healthcare_provider==1"
+          .col-sm-5
+            | Was the patient with an antibiotic?
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoAntibiotic' ng-model='food_report.patient_antibiotic' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoAntibiotic' ng-model='food_report.patient_antibiotic' value='0' No
+        .row ng-show="food_report.healthcare_provider==1"
+          .col-sm-5
+            | Facility Name:
+          .col-sm-7
+            input.form-control ng-model='food_report.facility_name'
+        .row ng-show="food_report.healthcare_provider==1"
+          .col-sm-5
+            | Facility Phone:
+          .col-sm-7
+            input.form-control ng-model='food_report.facility_phone'
+        .row
+          .col-sm-5
+            | Send to Restaurant?
+          .col-sm-7
+            label.radio-inline
+              input type="radio" name='rdoSendRestaurant' ng-model='food_report.send_to_restaurant' value='1' Yes
+            label.radio-inline
+              input type="radio" name='rdoSendRestaurant' ng-model='food_report.send_to_restaurant' value='0' No
+        .row
+          .col-sm-12
+            .checkbox
+              label
+                input type="checkbox" required="required" I understand this in NOT a legal public health reporting document
+
+        button.btn-lg-yellow.btn-block#submit-rating
+          | SUBMIT YOUR REPORT
+
+  div.left-sidebar-thankyou.lsidebar#thankyou
+    span.glyphicon.glyphicon-remove.close-left-sidebar
+    div.scroll-container
+      h2 Thank you for rating {{thankyou_info.name}}
+      #restaurants
+        .restaurant
+          div.level-box
+            div.color
+            div.abc
+              | {{ thankyou_info.grades | gradeslabel }}
+            div.desc Cleanliness
+          div.rating-comment
+            | We've crunched the numbers & reviewed the results. Your cleanliness rating came out to {{ thankyou_info.grades | gradeslabel }}:
+      h5.thankyou-desc
+      a.btn-lg-green.btn-block ng-click="findNewRestaurant()"
+        | FIND A NEW RESTAURANT
+      hr
+      h4 Helpful Links:
+      ul
+        li
+          =link_to 'About Us', about_path
+        li
+          =link_to 'Contact Us', contact_path
+        li
+          a href="#" Blog
+        li
+          a href="#" Food Safety Courses
+      h4 Follow us on:
+      .follow-us
+        = link_to image_tag('social_links/facebook.png'), 'https://www.facebook.com/DiningGrades', target: '_blank'
+        = link_to image_tag('social_links/twitter.png'), 'https://twitter.com/DiningGrades', target: '_blank'
+
+  div.left-sidebar-thankyou.lsidebar#thankyouReport
+    span.glyphicon.glyphicon-remove.close-left-sidebar
+    div.scroll-container
+      h2 Thank you for submitting a food poisoning report
+      a.btn-lg-green.btn-block ng-click="backRestaurant()"
+        | Back to Restaurant Profile
+      hr
+      h4 Helpful Links:
+      ul
+        li
+          =link_to 'About Us', about_path
+        li
+          =link_to 'Contact Us', contact_path
+        li
+          a href="#" Blog
+        li
+          a href="#" Food Safety Courses
+      h4 Follow us on:
+      .follow-us
+        = link_to image_tag('social_links/facebook.png'), 'https://www.facebook.com/DiningGrades', target: '_blank'
+        = link_to image_tag('social_links/twitter.png'), 'https://twitter.com/DiningGrades', target: '_blank'
+
+  .modal.signinup-modal.fade#claimRestaurantModal
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          h2
+            | Be The First To Know What Your Customers Are Saying About 
+            span.green Your 
+            | Restaurant
+          h5
+            | Claiming your restaurant listing is 
+            strong FREE
+            | &nbsp;and&nbsp;
+            strong EASY
+            | . Why wait?
+            br
+            | Become a Dining Grades Partner today and get:
+          .col-md-12
+            .col-md-offset-2.col-md-10
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Enroll your employees in our FREE Food Safety Courses
+            .col-md-offset-2.col-md-10
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | View customer reviews and comments as they happen
+            .col-md-offset-2.col-md-10
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Provide real time responses to customer comments
+            .col-md-offset-2.col-md-10
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Use detailed data to improve your restaurant image
+            .col-md-offset-2.col-md-10
+              = inline_svg 'icons/check.svg', class: 'svg-check'
+              | Increase customer loyalty & profits
+          br
+          h5
+            | We are the EYES and VOICE of your customers!
+          a.btn-lg-green ng-click="claimRestaurantListing()"
+            | CLAIM YOUR RESTAURANT LISTING
+
+  #claimMyModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          h2 Claim Your Restaurant Listing
+          h5 
+            | No credit card needed, claim your restaurant listing is 
+            strong FREE
+            |  and 
+            strong EASY
+          form name="claimForm" ng-submit="submitClaimRestaurant($event)"
+            div.form-group
+              label FIRST NAME
+              input type="text" class="form-control input-lg" placeholder="First Name" required="required" ng-model="claim_info.first_name"
+            div.form-group
+              label LAST NAME
+              input type="text" class="form-control input-lg" placeholder="Last Name" ng-model="claim_info.last_name"
+            div.form-group
+              label EMAIL ADDRESS
+              input type="email" class="form-control input-lg" placeholder="Email Address" ng-model="claim_info.email"
+            div.form-group
+              label PHONE NUMBER
+              input type="text" class="form-control input-lg" placeholder="Phone Number" ng-model="claim_info.tel"
+            div.form-group
+              label ADDRESS
+              input type="text" class="form-control input-lg" placeholder="Address" ng-model="claim_info.address"
+            div.row
+              .col-md-4
+                  div.form-group
+                    label CITY
+                    input type="text" class="form-control input-lg" placeholder="City" ng-model="claim_info.locality"
+              .col-md-4
+                div.form-group
+                  label STATE
+                  input type="text" class="form-control input-lg" placeholder="State" ng-model="claim_info.region"
+              .col-md-4
+                div.form-group
+                  label ZIP CODE
+                  input type="text" class="form-control input-lg" placeholder="Zip Code" ng-model="claim_info.zipcode"
+            button.btn-lg-green.btn-block
+              | CLAIM MY RESTAURANT LISTING!
+
+  #suggestRestaurantModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          form name="suggestForm" ng-submit="submitSuggestRestaurant($event)"
+            div.form-group
+              label TYPE OF CUISINE
+              multiselect ng-model="suggest.cuisine" options="c.label for c in cuisines" data-multiple="true" data-compare-by="value" scroll-after-rows="5" enableSearch="true"
+            div.form-group
+              label RESTAURANT NAME
+              input type="text" class="form-control input-lg" placeholder="Restaurant Name" required="required" ng-model="suggest.name"
+            div.form-group
+              label ADDRESS
+              input type="text" class="form-control input-lg" placeholder="Address" ng-model="suggest.address"
+            div.row
+              .col-md-4
+                  div.form-group
+                    label CITY
+                    input type="text" class="form-control input-lg" placeholder="City" ng-model="suggest.locality"
+              .col-md-4
+                div.form-group
+                  label STATE
+                  input type="text" class="form-control input-lg" placeholder="State" ng-model="suggest.region"
+              .col-md-4
+                div.form-group
+                  label COUNTRY
+                  input type="text" class="form-control input-lg" placeholder="Country" ng-model="suggest.country"
+            div.form-group
+              label EMAIL ADDRESS
+              input type="email" class="form-control input-lg" placeholder="Email Address" ng-model="suggest.email"
+            div.form-group
+              label WEBSITE
+              input type="text" class="form-control input-lg" placeholder="Website" ng-model="suggest.website"
+            div.row
+              .col-md-6
+                div.form-group
+                  label ZIP Code
+                  input type="text" class="form-control input-lg" placeholder="ZIP Code" ng-model="suggest.postcode"
+              .col-md-6
+                div.form-group
+                  label PHONE NUMBER
+                  input type="text" class="form-control input-lg" placeholder="Phone Number" ng-model="suggest.tel"
+            div.row
+              .col-md-6
+                div.form-group
+                  label LATITUDE
+                  input type="number" step="any" class="form-control input-lg" placeholder="latitude" ng-model="suggest.latitude"
+              .col-md-6
+                div.form-group
+                  label LONGITUDE
+                  input type="number" step="any" class="form-control input-lg" placeholder="longitude" ng-model="suggest.longitude"
+            button.btn-lg-green.btn-block
+              | SUGGEST A RESTAURANT

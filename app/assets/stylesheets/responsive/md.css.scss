@@ -1,0 +1,65 @@
+// Top Nav
+nav.navbar-fixed-top {
+  ul.navbar-nav {
+    li {
+      a {
+        padding-left: 6px;
+        padding-right: 6px;
+      }
+    }
+  }
+}
+// Search Box
+#search-box {
+  dl {
+    dt {
+      width: 200px;
+      h2 {
+        font-size: 24px;
+      }
+    }
+    dd {
+      margin-left: 220px;
+      .form-group {
+        label {
+          font-size: 10px;
+        }
+      }
+      button#btn-search {
+        font-size: 15px;
+        .svg-circle-right-arrow {
+          width: 25px;
+          height: 25px;
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+}
+// Account Page
+#home {
+  h1.welcome {
+    font-size: 28px;
+    margin: 15px 0;
+  }
+  .rate-score {
+    span {
+      font-size: 90px;
+      line-height: 90px;
+    }
+  }
+  #my-restaurants {
+    .row.header {
+      font-size: 12px;
+    }
+    .actions {
+      a {
+        font-size: 12px;
+        line-height: 20px;
+      }
+      a#btn-food-poisoning, a#btn-food-safety {
+        font-size: 11px;
+      }
+    }
+  }
+}

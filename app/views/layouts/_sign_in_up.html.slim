@@ -1,0 +1,170 @@
+div ng-controller="SigninupCtrl"
+  #loginModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .forgot-password ng-click="showForgetPwdModal()"
+          | Forgot Password?
+        .get-started
+          | Don't have an account? 
+          span.cusor ng-click="showSignup()" GET STARTED!
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          h2 Login to Your Account
+          .hello ng-show="afterLogin=='submit-rating'"
+            | Hello! You will need an account to save your rating. 
+            a href="#" ng-click="showSignup()"
+              u Create an account.
+          form
+            div.form-group
+              label EMAIL ADDRESS
+              input type="email" class="form-control input-lg" placeholder="Email Address" ng-model="loginForm.email"
+            div.form-group
+              label PASSWORD
+              input type="password" class="form-control input-lg" placeholder="Password" ng-model="loginForm.password"
+            .error ng-show="loginError" {{loginError}}
+            button.btn-lg-green.btn-block ng-click="submitLoginForm()"
+              | LOGIN
+
+  #signupModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .login
+          | Already have an account? 
+          span.cursor ng-click="showLogin()" LOGIN!
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          h2
+            | Get Started Absolutely 
+            span.green FREE.
+          h5 No credit card needed, just good ol' fashioned rating.
+          form
+            div.row
+              .col-md-8
+                div.form-group
+                  label PROFILE DISPLAY NAME*
+                  input type="text" class="form-control input-lg" placeholder="Profile Display Name" ng-model="registrationForm.name"
+              .col-md-4
+                div.form-group
+                  label ZIP CODE*
+                  input type="text" class="form-control input-lg" placeholder="Zip Code" ng-model="registrationForm.zipcode"
+            div.form-group
+              label EMAIL ADDRESS*
+              input type="email" class="form-control input-lg" placeholder="Email Address" ng-model="registrationForm.email"
+            div.form-group
+              label PASSWORD*
+              input type="password" class="form-control input-lg" placeholder="Password" ng-model="registrationForm.password"
+            div.form-group
+              label CONFIRM PASSWORD
+              input type="password" class="form-control input-lg" placeholder="Confirm Password" ng-model="registrationForm.password_confirmation"
+            .error ng-show="registerErrors" Data does not match. Try again.
+            button.btn-lg-green.btn-block ng-click="submitRegistrationForm()"
+              | SIGN UP FOR FREE
+          h5.terms
+            | By clicking "Sign Up For Free" I agree to Dining Grades 
+            span
+              =link_to 'Terms of Service', term_path
+            | .
+
+  #updateModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          form
+            div.row
+              .col-md-8.col-sm-8.col-xs-12
+                div.form-group
+                  label PROFILE DISPLAY NAME*
+                  input type="text" class="form-control input-lg" placeholder="Profile Display Name" ng-model="user.name"
+              .col-md-4.col-sm-4.col-xs-12
+                div.form-group
+                  label ZIP CODE*
+                  input type="text" class="form-control input-lg" placeholder="Zip Code" ng-model="user.zipcode"
+            div.form-group
+              label EMAIL ADDRESS*
+              input type="email" class="form-control input-lg" placeholder="Email Address" ng-model="user.email"
+            .error ng-show="updateErrors" Data does not valid. Try again.
+            button.btn-lg-green.btn-block ng-click="updateAccount()"
+              | UPDATE ACCOUNT
+
+  #passwordModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          form
+            div.form-group
+              label CURRENT PASSWORD*
+              input type="password" class="form-control input-lg" placeholder="Current Password" ng-model="tuser.current_password"
+            div.form-group
+              label PASSWORD*
+              input type="password" class="form-control input-lg" placeholder="Password" ng-model="tuser.password"
+            div.form-group
+              label CONFIRM PASSWORD
+              input type="password" class="form-control input-lg" placeholder="Confirm Password" ng-model="tuser.password_confirmation"
+            .error ng-show="passwordErrors" {{passwordErrors}}
+            button.btn-lg-green.btn-block ng-click="updatePassword()"
+              | UPDATE PASSWORD
+
+  #forgetPwdModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          form
+            div.form-group
+              label EMAIL ADDRESS*
+              input type="email" class="form-control input-lg" placeholder="Email Address" ng-model="resetEmail"
+            .error ng-show="resetEmailError" {{resetEmailError}}
+            button.btn-lg-green.btn-block ng-click="sendResetPwdEmail()"
+              | SEND EMAIL
+
+  #noticeModal.modal.signinup-modal.fade
+    .modal-dialog
+      .modal-content
+        button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          span aria-hidden="true"
+          | Close
+          span.glyphicon.glyphicon-remove
+        .modal-header
+          .company-brand
+            .logo
+            .brand
+        .modal-body
+          .notice
+            | {{notice}}

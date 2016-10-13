@@ -1,0 +1,17 @@
+h2 Claim Restaurant
+.row
+= will_paginate
+table.table
+  tr
+    th Restaurant Name
+    th Address
+    th Claim By
+    th
+  - @claims.each do |claim|
+    tr
+      td= claim.restaurant.name
+      td= "#{claim.restaurant.address} #{claim.restaurant.locality} #{claim.restaurant.region}, #{claim.restaurant.country.upcase}"
+      td= "#{claim.first_name} #{claim.last_name}"
+      td
+        = link_to 'Review', edit_claim_path(claim), class: 'btn btn-primary'
+= will_paginate

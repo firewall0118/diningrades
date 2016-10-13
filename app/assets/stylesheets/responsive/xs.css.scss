@@ -1,0 +1,46 @@
+// override navbar
+nav.navbar-fixed-top {
+  ul.navbar-nav {
+    float: none;
+    li {
+      a {
+        padding: 7px 20px;
+      }
+    }
+  }
+}
+
+.container.non-map {
+  margin-top: 30px;
+}
+
+// override sidebar
+.lsidebar {
+  height: calc(100% - 30px - 40px);
+  top: 30px;
+}
+
+#search-box {
+  height: auto;
+  min-height: 30px;
+  dl {
+    dt {
+      h2 {
+        text-align: center;
+        .fa-angle-double-down {
+          display: inline;
+        }
+      }
+    }
+    dd {
+      display: none;
+    }
+  }
+}
+
+// Modal Dialogs
+.modal-dialog {
+  position: relative !important;
+  width: auto !important;
+  margin: 30px 10px !important;
+}

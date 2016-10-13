@@ -1,0 +1,13 @@
+.container
+  h1= @question.question
+  p
+    b Category:
+    br
+    = @question.category
+  p
+    b Position:
+    br
+    = @question.position
+  p
+    = link_to 'Questions', questions_path, class: 'btn btn-primary'
+    = link_to 'Edit', edit_question_path(@question), class: 'btn btn-primary'

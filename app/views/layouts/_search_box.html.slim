@@ -1,0 +1,38 @@
+#search-box ng-controller="SearchCtrl" data-controller="#{controller.controller_name}"
+  .container
+    dl.dl-horizontal
+      dt
+        h2
+          | Find a Restaurant:
+          i.fa.fa-angle-double-down
+          i.fa.fa-angle-double-up
+      dd
+        .col-md-12.col-sm-12.col-xs-12
+          .col-md-3.col-sm-3.col-xs-3.col-xxs-12
+            div.form-group
+              label CITY, STATE OR ZIP
+              input#txtSearch.form-control.input-lg type="text" ng-enter="searchRestaurants()" placeholder="" ng-model="search.address"
+          .col-md-3.col-sm-3.col-xs-3.col-xxs-12
+            div.form-group.dropdown
+              label TYPE OF CUISINE
+              button.btn.btn-default.btn-lg.btn-block data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                | {{search.cuisinelabel}}
+                span.glyphicon.glyphicon-menu-down
+              input#txtCuisineType type="hidden" ng-model="search.cuisine"
+              ul.dropdown-menu
+                li ng-repeat="cuisine in cuisines" ng-click="search.cuisine=cuisine.value;search.cuisinelabel=cuisine.label"
+                  a href="#" {{cuisine.label}}
+          .col-md-3.col-sm-3.col-xs-3.col-xxs-12
+            div.form-group.dropdown
+              label GRADE
+              button.btn.btn-default.btn-lg.btn-block data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                | {{search.gradelabel}}
+                span.glyphicon.glyphicon-menu-down
+              input#txtGrade type="hidden" ng-model="search.grade"
+              ul.dropdown-menu
+                li ng-repeat="grade in grades" ng-click="search.grade=grade.value;search.gradelabel=grade.label"
+                  a href="#" {{grade.label}}
+          .col-md-3.col-sm-3.col-xs-3.col-xxs-12
+            button.btn.btn-default.btn-lg.btn-block#btn-search ng-click="searchRestaurants()"
+              | SEARCH
+              = inline_svg 'icons/circle-right-arrow.svg', class: 'svg-circle-right-arrow'

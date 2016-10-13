@@ -1,0 +1,129 @@
+.svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.svg-logo {
+  @extend .svg-icon;
+  width: 40px;
+  height: 40px;
+  vertical-align: top;
+  path {
+    fill: $red;
+  }
+}
+
+.svg-check {
+  @extend .svg-icon;
+  width: 30px;
+  height: 30px;
+  path {
+    fill: $green;
+  }
+}
+
+.svg-medal {
+  @extend .svg-icon;
+  width: 65px;
+  height: 65px;
+  polygon {
+    fill: $skyblue;
+  }
+}
+
+.svg-double-right-arrow {
+  @extend .svg-icon;
+  width: 15px;
+  height: 15px;
+  path, polygon {
+    fill: #337ab7;
+  }
+}
+
+.svg-circle-right-arrow {
+  @extend .svg-icon;
+  width: 35px;
+  height: 35px;
+  fill: $black;
+}
+
+.svg-up-long-arrow {
+  @extend .svg-icon;
+  width: 20px;
+  height: 20px;
+  path {
+    fill: $green;
+  }
+}
+.svg-down-long-arrow {
+  @extend .svg-up-long-arrow;
+}
+
+.btn-lg-svg {
+  @extend .btn;
+  @extend .btn-default;
+  @extend .btn-lg;
+  color: white !important;
+  font-weight: bold;
+  padding: 10px 0 8px 0;
+  position: relative;
+  svg {
+    margin-top: -7px;
+  }
+}
+
+.btn-lg-green {
+  @extend .btn-lg-svg;
+  background-color: $green !important;
+  border-color: $green !important;
+}
+
+.btn-lg-yellow {
+  @extend .btn-lg-svg;
+  background-color: $yellow !important;
+  border-color: $yellow !important;
+}
+
+.btn-lg-red {
+  @extend .btn-lg-svg;
+  background-color: $red !important;
+  border-color: $red !important;
+}
+
+.btn-lg-grey {
+  @extend .btn-lg-svg;
+  color: #14571F !important;
+  background-color: $grey !important;
+  border-color: $grey !important;
+}
+
+.btn-lg-black {
+  @extend .btn-lg-svg;
+  color: white !important;
+  background-color: #7B858B !important;
+  border-color: #7B858B !important;
+}
+
+.svg-btn-icon {
+  @extend .svg-icon;
+  width: 22px;
+  height: 22px;
+  path {
+    fill: white;
+  }
+  polygon {
+    fill: white;
+  }
+}
+
+.svg-apple {
+  @extend .svg-btn-icon;
+}
+
+.svg-circle-star {
+  @extend .svg-btn-icon;
+}
+
+.svg-circle-plus {
+  @extend .svg-btn-icon;
+}

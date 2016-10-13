@@ -1,0 +1,20 @@
+doctype html
+html[ng-app="dininggradesApp"]
+  head
+    meta[charset="UTF-8"]
+    meta[name="viewport" content="width=device-width, initial-scale=1.0"]
+    title
+      = content_for?(:title) ? yield(:title) : 'Dininggrades'
+    meta name="description" content="#{content_for?(:description) ? yield(:description) : 'Dininggrades'}"
+    == stylesheet_link_tag "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+    == stylesheet_link_tag "http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext"
+    == stylesheet_link_tag "application", :media => 'all'
+    == javascript_include_tag 'application'
+    script src="http://maps.google.com/maps/api/js" 
+    == csrf_meta_tags
+  body
+    header
+      == render 'layouts/navigation'
+    main[role="main"]= yield :content
+    footer
+      == render 'layouts/footer'

@@ -1,0 +1,352 @@
+html { 
+  height: 100%;
+}
+body {
+  height: calc(100% - 51px); // minus nav top height
+  color: $black;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 27px;
+}
+// make all images responsive by default
+img {
+  @extend .img-responsive;
+  margin: 0 auto;
+}
+
+input, select, textarea {
+  color: $inputcolor !important;
+}
+
+a.underline {
+  text-decoration: underline;
+}
+
+hr {
+  margin: 10px 0;
+}
+
+.btn {
+  -webkit-border-radius: 3px !important;
+  -moz-border-radius: 3px !important;
+  border-radius: 3px !important;
+}
+
+input, textarea {
+  -webkit-border-radius: 3px !important;
+  -moz-border-radius: 3px !important;
+  border-radius: 3px !important;
+  font-size: 16px !important;
+}
+
+.required-atk:after { 
+   content:"*";
+   color:red;
+}
+
+// Logo
+.logo {
+  width: 34px;
+  height: 34px;
+  display: inline-block;
+  background: url(logo.png) no-repeat;
+}
+.brand {
+  width: 157px;
+  height: 31px;
+  display: inline-block;
+  background: url(diningrades.png) no-repeat;
+}
+
+.company-brand {
+  .brand {
+    margin-left: -5px;
+  }
+}
+
+.plink {
+  color: $green;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+// override for the 'Home' navigation link
+.navbar-brand {
+  font-size: inherit;
+}
+
+// override navbar
+nav.navbar-fixed-top {
+  ul.navbar-nav {
+    float: right;
+    li.divider {
+      margin: 12px 0;
+      color: white;
+    }
+    li {
+      a {
+        color: white;
+      }
+    }
+    li.hide-item {
+      display: none;
+    }
+  }
+}
+.navbar-inverse {
+  background-color: $blackbgcolor;
+  border-color: $blackbgcolor;
+  .navbar-brand {
+    color: white;
+    padding: 5px 0 5px 20px;
+    .logo {
+      margin-top: 5px;
+    }
+    span {
+      vertical-align: top;
+      display: inline-block;
+      div.italic {
+        margin-top: -12px;
+        color: $green;
+        font-size: 12px;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+// overide container
+.container.non-map {
+  margin-top: 100px;
+  margin-bottom: 60px;
+}
+.container.admin {
+  margin-top: 10px;
+  margin-bottom: 50px;
+  .btn {
+    margin-right: 10px;
+  }
+}
+
+.no-table-border {
+  > thead > tr > th {
+    border-bottom : 0;
+  }
+  > tbody > tr > td {
+    border: 0;
+  }
+}
+
+// override modal dialog
+.modal-dialog {
+  margin-top: 100px;
+  text-align: center;
+  .modal-content {
+    .close {
+      font-size: 13px;
+      font-weight: normal;
+      text-shadow: none;
+      color: white;
+      position: absolute;
+      right: 0;
+      top: -20px;
+      opacity: 1;
+    }
+    .modal-header {
+      background-color: $blackbgcolor;
+      color: white;
+      border-top-right-radius: 4px;
+      border-top-left-radius: 4px;
+    }
+    .modal-body {
+      padding: 15px 30px 25px;
+      color: $black;
+      h2:first-child {
+        margin-top: 5px;
+      }
+      .hello {
+        margin: 20px 0;
+        background-color: $lightblue;
+        padding: 10px 15px;
+        border-radius: 7px;
+        font-size: 13px;
+        a {
+          color: $black;
+        }
+      }
+      .error {
+        margin: 20px 0;
+        background-color: $red;
+        padding: 10px 15px;
+        border-radius: 7px;
+        font-size: 13px;
+      }
+      .notice {
+        margin: 20px 0;
+        background-color: $green;
+        padding: 10px 15px;
+        border-radius: 7px;
+        font-size: 13px; 
+        color: white;
+      }
+      .form-group {
+        text-align: left;
+      }
+    }
+  }
+}
+
+// override footer
+footer {
+  background-color: $blackbgcolor;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+  .container {
+    display: none;
+    padding: 0 10px;
+    .svg-down-long-arrow {
+      position: absolute;
+      right: 30px;
+      top: 20px;
+      cursor: pointer;
+    }
+    h2 {
+      color: $green;
+    }
+    h3.name {
+      color: white;
+      span:last-child {
+        display: inline-block;
+        height: 40px;
+        padding-top: 10px;
+      }
+    }
+    .btn-default {
+      background-color: #7B858B;
+      border-color: #7B858B;
+      color: white;
+      padding: 10px 25px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    ul {
+      margin: 30px 0;
+      padding: 0;
+      li {
+        display: inline;
+        padding: 0 25px;
+        a {
+          color: white !important;
+        }
+      }
+    }
+    .copyright {
+      margin-top: 15px;
+      color: #7B858B;
+      a {
+        color: $green;
+      }
+    }
+  }
+  .footer-menu {
+    padding: 10px 30px;
+    width: 100%;
+    text-align: right;
+    color: $green;
+    font-size: 16px;
+    .svg-up-long-arrow {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  }
+}
+
+// THESE ARE EXAMPLES YOU CAN MODIFY
+// create your own classes
+// to make views framework-neutral
+.column {
+  @extend .col-md-6;
+  @extend .text-center;
+}
+.form {
+  @extend .col-md-6;
+}
+.form-centered {
+  @extend .col-md-6;
+  @extend .text-center;
+}
+.submit {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-lg;
+}
+// apply styles to HTML elements
+// to make views framework-neutral
+main {
+  @extend .container;
+  background-color: #fff;
+  padding: 0;
+  width: 100%;     
+  height: 100%;    
+  margin-top:      51px; // accommodate the navbar
+  position: relative;
+}
+section {     
+  @extend .row;     
+  margin-top: 20px;
+}     
+
+// Styles for      form views
+// using Bootstrap
+// generated by the rails_layout gem
+.authform {
+  padding-top: 30px;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.authform form {
+  @extend .well;
+  @extend .well-lg;
+  padding-bottom: 40px;
+}
+.authform .right {
+  float: right !important;
+}
+.authform .button {
+  @extend .btn;
+  @extend .btn-primary;
+}
+.authform fieldset {
+  @extend .well;
+}
+#error_explanation:not(:empty) {
+  @extend .alert;
+  @extend .alert-danger;
+}     
+#error_explanation h2 {
+  font-size: 16px;
+}
+.button-xs {
+  @extend .btn;
+  @extend .btn-primary;
+  @extend .btn-xs;
+}
+.btn-lg {
+  min-height: 46px;
+}
+
+// Colors
+.green {
+  color: $green;
+}
+
+// extra
+.cursor {
+  cursor: pointer;
+}
+.text-right {
+  text-align: right;
+}     

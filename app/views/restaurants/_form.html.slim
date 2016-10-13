@@ -1,0 +1,25 @@
+= semantic_form_for @restaurant do |f|
+  = f.semantic_errors *f.object.errors.keys
+  .row
+    .col-md-6
+      = f.input :factual_id, :input_html => { :readonly => true }
+      = f.input :category_ids, :input_html => { :readonly => true }
+      = f.input :cuisine, :input_html => { :readonly => true }
+      = f.input :name, :input_html => { :readonly => true }
+      = f.input :country, :as => :string, :input_html => { :readonly => true }
+      = f.input :region, :input_html => { :readonly => true }
+      = f.input :locality, :input_html => { :readonly => true }
+      = f.input :website, :input_html => { :readonly => true }
+      = f.input :active, :label => false
+    .col-md-6
+      = f.input :address, :input_html => { :readonly => true }
+      = f.input :address_extended, :input_html => { :readonly => true }
+      = f.input :email, :input_html => { :readonly => true }
+      = f.input :tel, :input_html => { :readonly => true }
+      = f.input :postcode, :input_html => { :readonly => true }
+      = f.input :hours_display, :input_html => { :readonly => true }
+      = f.input :latitude, :input_html => { :readonly => true }
+      = f.input :longitude, :input_html => { :readonly => true }
+     
+  = f.submit 'Save', class: 'btn btn-primary'
+  = link_to 'Back', restaurants_path, class: 'btn btn-default'

@@ -1,0 +1,55 @@
+#contact-us {
+  max-width: 400px;
+  width: 100%;
+  margin:0 auto;
+  text-align: center;
+  .form-group {
+    text-align: left;
+  }
+}
+
+#about-us {
+  max-width: 700px;
+  width: 100%;
+  margin:0 auto;
+  h4 {
+    font-weight: bold;
+    margin-top: 30px;
+  }
+}
+
+#terms-of-use {
+  h5 {
+    line-height: 25px;
+    margin-bottom: 13px;
+  }
+}
+
+#change-password {
+  width: 400px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  & > * {
+    flex-grow: 1;
+    @extend .h3;
+    margin: 0;
+    text-align: center;
+  }
+  .previous_page, .next_page {
+    flex-grow: 14;
+    text-align: left;
+  }
+  .next_page {
+    text-align: right;
+  }
+}
+
+.follow-us {
+  a {
+    display: inline-block;
+    margin-right: 10px;
+  }
+}

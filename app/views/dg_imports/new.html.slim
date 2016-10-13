@@ -1,0 +1,55 @@
+h1 Import Health Department Ratings
+hr
+= form_tag dg_imports_path, method: 'post', multipart: true, class: 'form-horizontal' do
+  div.form-group
+    label.col-sm-2 CSV File
+    div.col-sm-10
+      = file_field_tag 'csv', accept: '.csv'
+  div.form-group
+    label.col-sm-2 License ID
+    div.col-sm-4
+      input.form-control type="text" name="license_id" value="License_id"
+  div.form-group
+    label.col-sm-2 Title
+    div.col-sm-4
+      input.form-control type="text" name="title" value="title"
+  div.form-group
+    label.col-sm-2 Address
+    div.col-sm-4
+      input.form-control type="text" name="address" value="address"
+  div.form-group
+    label.col-sm-2 City
+    div.col-sm-4
+      input.form-control type="text" name="city" value="city"
+  div.form-group
+    label.col-sm-2 State
+    div.col-sm-4
+      input.form-control type="text" name="state" value="state"
+  div.form-group
+    label.col-sm-2 Zip
+    div.col-sm-4
+      input.form-control type="text" name="zip" value="zip"
+  div.form-group
+    label.col-sm-2 Telephone
+    div.col-sm-4
+      input.form-control type="text" name="telephone" value="telephone"
+  div.form-group
+    label.col-sm-2 Date of inspection
+    div.col-sm-4
+      input.form-control type="text" name="dateOfinspection" value="dateOfInspection"
+  div.form-group
+    label.col-sm-2 Rating
+    div.col-sm-4
+      input.form-control type="text" name="cleanliness_rating" value="cleanliness_rating"
+  div.form-group
+    label.col-sm-2 Lon
+    div.col-sm-4
+      input.form-control type="text" name="lon" value="lon"
+  div.form-group
+    label.col-sm-2 Lat
+    div.col-sm-4
+      input.form-control type="text" name="lat" value="lat"
+
+  div.form-group
+    div.col-sm-offset-2.col-sm-10
+      button.btn.btn-primary type="submit" Submit
